@@ -9,6 +9,8 @@ import {
 } from "@thirdweb-dev/react";
 import { ListingType } from "@thirdweb-dev/sdk";
 import { BanknotesIcon, ClockIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Home = () => {
   // Get the contract
@@ -18,7 +20,8 @@ const Home = () => {
   );
   const { data: listings, isLoading: loadingListings } =
     useActiveListings(contract);
-  console.log(listings);
+  const router = useRouter();
+  //console.log(listings);
   return (
     <div className="">
       <Header />
@@ -34,9 +37,10 @@ const Home = () => {
           >
             {listings?.map((listing) => (
               <div
-                className="flex flex-col card hover:scale-105
-              transition-all duration-150 ease-out"
                 key={listing.id}
+                onClick={() => router.push(`/listing/${listing.id}`)}
+                className="flex flex-col card hover:scale-105
+                transition-all duration-150 ease-out"
               >
                 <div className="flex1 flex flex-col pb-2 items-center">
                   <MediaRenderer className="w-44" src={listing.asset.image} />
